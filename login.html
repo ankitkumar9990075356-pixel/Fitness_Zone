@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IronLeaf Elite Fitness — Login</title>
+    <meta name="description" content="Login to your IronLeaf Elite Fitness member portal." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@200;300;400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --dark: #0a0a0a;
+            --card: #111111;
+            --border: #222222;
+            --gold: #c9a84c;
+            --gold-light: #e2c47a;
+            --white: #ffffff;
+            --grey: #888888;
+            --light-grey: #bbbbbb;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        /* ===== BACKGROUND VIDEO ===== */
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.25);
+        }
+
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    rgba(0, 0, 0, 0.5) 50%,
+                    rgba(10, 8, 0, 0.8) 100%);
+        }
+
+        /* ===== LAYOUT ===== */
+        .login-wrapper {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            height: 100vh;
+        }
+
+        /* ===== LEFT PANEL ===== */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 5rem;
+        }
+
+        .brand-mark {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-mark .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .brand-mark .sub {
+            font-size: 0.55rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-top: 2px;
+        }
+
+        .left-content {
+            max-width: 520px;
+        }
+
+        .left-eyebrow {
+            font-size: 0.6rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .left-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .left-heading em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .left-divider {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .left-desc {
+            font-size: 0.82rem;
+            color: var(--light-grey);
+            line-height: 1.9;
+            letter-spacing: 0.04em;
+            max-width: 400px;
+        }
+
+        /* ===== RIGHT PANEL (Login Form) ===== */
+        .right-panel {
+            background: rgba(10, 9, 7, 0.88);
+            backdrop-filter: blur(30px);
+            border-left: 1px solid rgba(201, 168, 76, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 3.5rem;
+            position: relative;
+        }
+
+        .right-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .form-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.4rem;
+            color: var(--white);
+        }
+
+        .form-sub {
+            font-size: 0.72rem;
+            color: var(--grey);
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.58rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--grey);
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.7rem 0;
+            outline: none;
+            letter-spacing: 0.05em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-bottom-color: var(--gold);
+        }
+
+        .form-group input::placeholder {
+            color: #444;
+        }
+
+        /* floating gold underline animation */
+        .form-group::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .form-group:focus-within::after {
+            width: 100%;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.7rem;
+            color: var(--grey);
+            cursor: pointer;
+        }
+
+        .remember input[type="checkbox"] {
+            accent-color: var(--gold);
+            width: 14px;
+            height: 14px;
+        }
+
+        .forgot-link {
+            font-size: 0.65rem;
+            color: var(--grey);
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: var(--gold);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.35);
+        }
+
+        .btn-login:hover::after {
+            transform: translateX(0);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .error-msg {
+            color: #e55;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            margin-top: 1rem;
+            text-align: center;
+            min-height: 1.2rem;
+        }
+
+        .divider-or {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .divider-or span {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider-or p {
+            font-size: 0.6rem;
+            color: var(--grey);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .btn-register:hover {
+            border-color: var(--gold);
+            background: rgba(201, 168, 76, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .form-footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #444;
+            letter-spacing: 0.1em;
+        }
+
+        .form-footer a {
+            color: var(--grey);
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== LOADING OVERLAY ===== */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            transition: opacity 0.8s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        .loading-bar {
+            width: 120px;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            animation: loadBar 1.2s ease forwards;
+        }
+
+        @keyframes loadBar {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ===== CURSOR ===== */
+        .cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .right-panel {
+                border-left: none;
+                border-top: 1px solid rgba(201, 168, 76, 0.12);
+            }
+
+            body {
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-logo">IronLeaf</div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- BACKGROUND VIDEO -->
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="4109367-uhd_3840_2160_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="login-wrapper">
+
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+            <div class="brand-mark">
+                <span class="logo">IronLeaf</span>
+                <span class="sub">Elite Fitness · Est. 2018</span>
+            </div>
+            <div class="left-content">
+                <span class="left-eyebrow">Member Portal</span>
+                <h1 class="left-heading">
+                    Welcome to<br>the <em>Iron</em><br>Brotherhood
+                </h1>
+                <div class="left-divider"></div>
+                <p class="left-desc">
+                    Your journey to elite fitness begins here. Login to access your personalised training dashboard,
+                    class bookings, and performance analytics.
+                </p>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <h2 class="form-heading">Member Login</h2>
+            <p class="form-sub">Sign in to your IronLeaf account</p>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required
+                        autocomplete="email" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                        autocomplete="current-password" />
+                </div>
+
+                <div class="form-options">
+                    <label class="remember">
+                        <input type="checkbox" id="remember" />
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
+                <div class="error-msg" id="errorMsg"></div>
+            </form>
+
+            <div class="divider-or">
+                <span></span>
+                <p>or</p><span></span>
+            </div>
+
+            <a href="contact.html" class="btn-register">Become a Member</a>
+
+            <div class="form-footer">
+                <p>By signing in you agree to our <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1400);
+        });
+
+        // ===== CURSOR =====
+        const cur = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        document.addEventListener('mousemove', e => {
+            cur.style.left = e.clientX + 'px';
+            cur.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                ring.style.left = e.clientX + 'px';
+                ring.style.top = e.clientY + 'px';
+            }, 80);
+        });
+
+        // ===== LOGIN HANDLER =====
+        // Open access — any email/password accepted
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+
+            btn.textContent = 'Verifying…';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                btn.textContent = 'Welcome Back ✓';
+                btn.style.background = '#2a7a4a';
+                btn.style.color = '#fff';
+                // Set auth session & redirect to main site
+                sessionStorage.setItem('ironleaf_auth', 'true');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
+            }, 900);
+        }
+    </script>
+</body>
+
+</html>
